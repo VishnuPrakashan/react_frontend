@@ -1,12 +1,16 @@
 import React from 'react'
 import './Home.css'
 import { Link } from 'react-router-dom'
+import { useContext } from 'react'
+import { UserContext } from '../../../context/userContext'
 
 const Home = () => {
+
+   const {user} = useContext(UserContext)
   return (
     <>
         <div className="nav">
-        <span className="welcomeText">Hi,</span>
+        {!!user && (<span className="welcomeText">Hi, {user.name}</span>)}
         <Link to={"/signup"}><button typeof="submit" className="btn2">Logout</button></Link>
         </div>
 

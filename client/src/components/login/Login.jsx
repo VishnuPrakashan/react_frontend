@@ -3,17 +3,37 @@ import "./Login.css";
 import { AiOutlineEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [data, setData] = useState({
     email: "",
     password: "",
   });
 
-  const loginUser = (e) => {
+  const loginUser = async (e) => {
     e.preventDefault();
 
-    axios.get('/')
+    const { email, password } = data;
+
+    try {
+      const { data } = await axios.post("/", {
+        email,
+        password,
+      });
+
+      if (data.error) {
+        toast.error(data.error);
+      } else {
+        setData({});
+        navigate("/home");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
